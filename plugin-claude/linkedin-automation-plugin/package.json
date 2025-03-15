@@ -1,0 +1,34 @@
+{
+  "name": "linkedin-automation-plugin",
+  "version": "1.0.0",
+  "description": "A Chrome extension for automating interactions on LinkedIn.",
+  "main": "src/background/background.ts",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "stripe": "^8.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.4.3",
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.8.0",
+    "ts-loader": "^9.2.6"
+  },
+  "browser": {
+    "src/background/background.ts": "background.js",
+    "src/contentScript/linkedinController.ts": "contentScript.js",
+    "src/contentScript/profileProcessor.ts": "profileProcessor.js",
+    "src/popup/popup.tsx": "popup.js"
+  },
+  "manifest_version": 3,
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ]
+}
