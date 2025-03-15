@@ -1,36 +1,25 @@
 {
-    "manifest_version": 3,
-    "name": "LinkedIn Auto Engagement",
-    "version": "1.0",
-    "description": "Automates profile engagement on LinkedIn",
-    "permissions": [
-      "storage",
-      "tabs",
-      "activeTab",
-      "notifications",
-      "scripting",
-      "https://*.linkedin.com/*",
-      "<https://your-api-endpoint.com/*>"
-    ],
-    "background": {
-      "service_worker": "background.js"
-    },
-    "action": {
-      "default_popup": "popup/popup.html",
-      "default_icon": "icons/icon.png"
-    },
-    "content_scripts": [
-      {
-        "matches": ["https://*.linkedin.com/*"],
-        "js": ["content.js"],
-        "run_at": "document_idle"
-      }
-    ],
-    "web_accessible_resources": [
-      {
-        "resources": ["stripe/*"],
-        "matches": ["https://*.linkedin.com/*"]
-      }
-    ]
-  }
-  
+  "manifest_version": 3,
+  "name": "LinkedIn AutoEngage",
+  "version": "1.0",
+  "permissions": ["storage", "activeTab", "scripting", "tabs"],
+  "host_permissions": ["*://*.linkedin.com/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": "icons/icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.linkedin.com/*"],
+      "js": ["content.js"],
+      "css": ["floating.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": ["floating.html"],
+    "matches": ["*://*.linkedin.com/*"]
+  }]
+}

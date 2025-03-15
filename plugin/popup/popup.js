@@ -22,7 +22,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       `;
       
       document.getElementById('start-setup').addEventListener('click', () => {
-        chrome.tabs.create({ url: 'https://www.linkedin.com' });
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+          chrome.tabs.update(tabs[0].id, {url: 'https://www.linkedin.com'}, (tab) => {
+            chrome.scripting.executeScript({
+              target: { tabId: tab.id },
+              files: ['contentScript.js']
+            });
+          });
+        });
       });
     } else {
       setupContainer.style.display = 'none';
@@ -43,7 +50,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   
     // LinkedIn opener
     document.getElementById('open-linkedin')?.addEventListener('click', () => {
-      chrome.tabs.create({ url: 'https://www.linkedin.com' });
+      chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        chrome.tabs.update(tabs[0].id, {url: 'https://www.linkedin.com'}, (tab) => {
+          chrome.scripting.executeScript({
+            target: { tabId: tab.id },
+            files: ['contentScript.js']
+          });
+        });
+      });
       window.close();
     });
   

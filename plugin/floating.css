@@ -1,0 +1,55 @@
+#floating-panel {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 999999;
+    width: 300px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    font-family: Arial, sans-serif;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: #2A5C82;
+    color: white;
+    border-radius: 12px 12px 0 0;
+  }
+  
+  #close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .content {
+    padding: 15px;
+  }
+  
+  .stats {
+    margin: 15px 0;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 8px;
+  }
+  
+  button {
+    background: #34ADB9;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 5px;
+  }
+  
+  #pause-btn {
+    background: #FF6B6B;
+  }
