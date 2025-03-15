@@ -1,25 +1,25 @@
 {
-  "manifest_version": 3,
-  "name": "LinkedIn AutoEngage",
-  "version": "1.0",
-  "permissions": ["storage", "activeTab", "scripting", "tabs"],
-  "host_permissions": ["*://*.linkedin.com/*"],
-  "background": {
-    "service_worker": "background.js"
-  },
-  "action": {
-    "default_icon": "icons/icon.png"
-  },
-  "content_scripts": [
-    {
+    "manifest_version": 3,
+    "name": "LinkedIn Automation Plugin",
+    "version": "1.0",
+    "permissions": ["activeTab", "storage", "scripting", "alarms"],
+    "host_permissions": ["*://*.linkedin.com/*"],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "content_scripts": [{
       "matches": ["*://*.linkedin.com/*"],
       "js": ["content.js"],
-      "css": ["floating.css"],
-      "run_at": "document_end"
+      "css": ["ui/style.css"]
+    }],
+    "web_accessible_resources": [{
+      "resources": ["ui/form.html", "ui/style.css"],
+      "matches": ["*://*.linkedin.com/*"]
+    }],
+    "action": {
+      "default_icon": "icons/icon48.png"
+    },
+    "icons": {
+      "48": "icons/icon48.png"
     }
-  ],
-  "web_accessible_resources": [{
-    "resources": ["floating.html"],
-    "matches": ["*://*.linkedin.com/*"]
-  }]
-}
+  }
