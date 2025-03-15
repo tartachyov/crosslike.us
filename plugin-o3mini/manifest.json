@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "LinkedIn Automation Plugin",
+    "name": "o3mini",
     "version": "1.0",
     "description": "Automates LinkedIn interactions and subscription setup",
     "permissions": [

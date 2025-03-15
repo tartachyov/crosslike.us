@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "LinkedIn Automation Tool",
+    "name": "claude3.7",
     "version": "1.0",
     "description": "Automates interactions on LinkedIn profiles",
     "permissions": [
@@ -16,9 +16,9 @@
     "action": {
       "default_popup": "popup.html",
       "default_icon": {
-        "16": "images/icon16.png",
-        "48": "images/icon48.png",
-        "128": "images/icon128.png"
+        "16": "images/icon.png",
+        "48": "images/icon.png",
+        "128": "images/icon.png"
       }
     },
     "background": {
@@ -38,8 +38,8 @@
       }
     ],
     "icons": {
-      "16": "images/icon16.png",
-      "48": "images/icon48.png",
-      "128": "images/icon128.png"
+      "16": "images/icon.png",
+      "48": "images/icon.png",
+      "128": "images/icon.png"
     }
   }

@@ -1,5 +1,5 @@
 {
-  "name": "linkedin-automation-plugin",
+  "name": "copilot-claude3.5",
   "version": "1.0.0",
   "description": "A Chrome extension for automating interactions on LinkedIn.",
   "main": "src/background/background.ts",

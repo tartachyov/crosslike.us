@@ -1,5 +1,3 @@
-Sure, here's the contents for the file: /linkedin-automation-plugin/linkedin-automation-plugin/webpack.config.js
-
 const path = require('path');
 
 module.exports = {
