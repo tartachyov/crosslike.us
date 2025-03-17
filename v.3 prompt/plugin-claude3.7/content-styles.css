@@ -1,0 +1,152 @@
+/* Styles for floating button and UI overlay */
+
+#linkedin-automation-button {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #0077b5;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    z-index: 9999;
+    transition: all 0.3s ease;
+  }
+  
+  #linkedin-automation-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  #linkedin-automation-button.processing {
+    animation: pulse 1.5s infinite;
+    background-color: #ffa500;
+  }
+  
+  #linkedin-automation-button.error {
+    background-color: #ff4d4d;
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  #linkedin-automation-container {
+    position: fixed;
+    top: 80px;
+    right: 80px;
+    width: 350px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 10000;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  
+  #linkedin-automation-container.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+  }
+  
+  .plugin-header {
+    background-color: #0077b5;
+    color: white;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .plugin-header h2 {
+    font-size: 16px;
+    margin: 0;
+  }
+  
+  .plugin-header button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .plugin-content {
+    padding: 16px;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  
+  .plugin-section {
+    margin-bottom: 20px;
+  }
+  
+  .plugin-section h3 {
+    font-size: 14px;
+    margin-bottom: 12px;
+    color: #333;
+  }
+  
+  .form-group {
+    margin-bottom: 12px;
+  }
+  
+  .form-group label {
+    display: block;
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 4px;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .plugin-button {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #0077b5;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+  
+  .plugin-button:hover {
+    background-color: #005582;
+  }
+  
+  .plugin-button.secondary {
+    background-color: #e0e0e0;
+    color: #333;
+  }
+  
+  .plugin-button.secondary:hover {
+    background-color: #d0d0d0;
+  }
+  
+  .plugin-section.hidden {
+    display: none;
+  }

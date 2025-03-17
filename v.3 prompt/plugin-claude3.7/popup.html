@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CrossLike.us</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="popup-container">
+    <div class="popup-header">
+      <h1>CrossLike.us</h1>
+    </div>
+    
+    <div class="popup-content">
+      <!-- Setup Form Section - Shown when setup is not complete -->
+      <div id="setup-section" class="section">
+        <h2>Setup</h2>
+        <p>Please set up your account to start using the automation.</p>
+        <button id="setup-button" class="primary-button">Set Up Now</button>
+      </div>
+      
+      <!-- Status Section - Shown when setup is complete -->
+      <div id="status-section" class="section hidden">
+        <h2>Status</h2>
+        <div class="status-info">
+          <p id="status-message">Plugin is ready</p>
+          <div class="status-indicator active"></div>
+        </div>
+        
+        <div class="actions">
+          <button id="run-button" class="primary-button">Run Now</button>
+          <button id="settings-button" class="secondary-button">Settings</button>
+          <button id="logout-button" class="secondary-button">Logout</button>
+        </div>
+      </div>
+      
+      <!-- Settings Section -->
+      <div id="settings-section" class="section hidden">
+        <h2>Settings</h2>
+        <div class="settings-group">
+          <label for="daily-reminder">
+            <input type="checkbox" id="daily-reminder" checked>
+            Enable daily reminders
+          </label>
+        </div>
+        <button id="back-button" class="secondary-button">Back</button>
+      </div>
+    </div>
+    
+    <div class="popup-footer">
+      <p>CrossLike.us Plugin v1.0</p>
+    </div>
+  </div>
+  
+  <script src="utils.js"></script>
+  <script src="api.js"></script>
+  <script src="auth.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+// Background script for managing alarms and notifications
+
+// Set up daily reminder alarm
+chrome.runtime.onInstalled.addListener(() => {
+    // Create daily alarm
+    chrome.alarms.create('dailyReminder', {
+      periodInMinutes: 24 * 60 // Once per day
+    });
+    
+    console.log('LinkedIn Plugin installed and alarm set');
+  });
+  
+  // Listen for alarm
+  chrome.alarms.onAlarm.addListener(async (alarm) => {
+    if (alarm.name === 'dailyReminder') {
+      // Check if user has visited LinkedIn today
+      const { lastVisitDate } = await chrome.storage.local.get(['lastVisitDate']);
+      const today = new Date().toDateString();
+      
+      // Check if setup is complete
+      const { setupComplete } = await chrome.storage.local.get(['setupComplete']);
+      
+      if (setupComplete && lastVisitDate !== today) {
+        // Send notification
+        chrome.notifications.create({
+          type: 'basic',
+          iconUrl: 'images/icon128.png',
+          title: 'LinkedIn Reminder',
+          message: 'Don\'t forget to visit LinkedIn today to engage with your network!',
+          priority: 2
+        });
+      }
+    }
+  });
+  
+  // Listen for notification clicks
+  chrome.notifications.onClicked.addListener(() => {
+    // Open LinkedIn
+    chrome.tabs.create({ url: 'https://www.linkedin.com' });
+  });
+  
+  // Listen for messages from content script
+  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.action === 'checkAuthentication') {
+      chrome.storage.local.get(['accessToken', 'refreshToken', 'setupComplete'], (result) => {
+        sendResponse({
+          isAuthenticated: !!(result.accessToken && result.refreshToken),
+          isSetupComplete: !!result.setupComplete
+        });
+      });
+      return true; // Keep channel open for async response
+    }
+  });
