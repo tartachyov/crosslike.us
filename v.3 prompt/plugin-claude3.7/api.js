@@ -71,7 +71,7 @@ async function createParticipant(email, password, linkedInUrl) {
     throw new Error(response.errors[0].message);
   }
   
-  return response.data.createParticipant.id;
+  return response.data.create.createParticipant;
 }
 
 /**

@@ -4,7 +4,7 @@
 function createFloatingButton() {
     const button = document.createElement('div');
     button.id = 'linkedin-automation-button';
-    button.innerHTML = '<span>LP</span>';
+    button.innerHTML = '<span>CL</span>';
     button.title = 'LinkedIn Plugin';
     document.body.appendChild(button);
     

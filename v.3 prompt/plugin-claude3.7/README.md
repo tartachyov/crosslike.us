@@ -49,7 +49,7 @@ You'll need to create icons for your extension. You can use any icon creation to
 1. Click on the extension icon in your Chrome toolbar
 2. If it's your first time, you'll see the setup screen
 3. Navigate to LinkedIn.com
-4. Look for the floating button (LP) on the right side of the page
+4. Look for the floating button (CL) on the right side of the page
 5. Click the button to open the plugin interface
 6. Complete the setup process:
    - Enter your email, password, and LinkedIn profile URL

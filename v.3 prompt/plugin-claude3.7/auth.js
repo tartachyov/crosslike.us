@@ -66,7 +66,8 @@ async function completeVerificationAndLogin(code, email, password) {
     // Mark setup as complete
     await saveToStorage({
       setupComplete: true,
-      lastLoginDate: new Date().toISOString()
+      lastLoginDate: new Date().toISOString(),
+      password: ''
     });
     
     return true;
