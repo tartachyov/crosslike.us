@@ -93,8 +93,163 @@ For distributing to users:
 2. Upload to the Chrome Web Store (requires developer account)
 3. Follow the Chrome Web Store guidelines for publishing
 
-## Security Notes
+# Security and Advanced Usage Notes
 
-- This plugin handles sensitive information (email, password)
-- Ensure you're using HTTPS for all API calls
-- Consider implementing more robust error handling and retries for API
+## Security Considerations
+
+### Credential Storage
+- The plugin stores credentials in Chrome's local storage, which provides basic security but is not foolproof
+- Consider implementing encryption for stored passwords
+- Add an option for users to use OAuth instead of storing passwords directly
+
+### API Communication
+- All API calls are using HTTPS which provides transport security
+- Consider adding request rate limiting to avoid IP blocks from LinkedIn
+- Implement proper error handling for network failures
+- Add request timeouts to prevent hanging operations
+
+### Token Management
+- The current implementation refreshes tokens before they expire
+- Consider implementing a more robust token validation system
+- Add automatic re-login if refresh token expires
+
+## Advanced Usage Notes
+
+### Human-like Interaction
+- The plugin implements random delays between actions to mimic human behavior
+- Consider adding more randomization in scrolling behavior
+- Add random mouse movements before clicking elements
+
+### LinkedIn Detection Prevention
+- LinkedIn monitors for automated activity
+- Consider implementing advanced detection avoidance:
+  - Vary timing between sessions
+  - Limit total number of actions per day
+  - Add natural scrolling patterns
+  - Implement IP rotation if needed for high-volume users
+
+### Error Recovery
+- Current implementation has basic error handling
+- Consider adding:
+  - Automatic retry with exponential backoff
+  - Session recovery after browser restart
+  - State persistence across failures
+
+### Customization Options
+- Consider adding user-configurable options:
+  - Number of posts to like per profile
+  - Custom delay settings
+  - Profile targeting preferences
+  - Action schedules (time of day, days of week)
+  - Automation intensity settings (aggressive vs. conservative)
+
+## Maintenance Notes
+
+### LinkedIn DOM Changes
+- LinkedIn frequently updates their DOM structure
+- The selectors used for finding like buttons may need periodic updates
+- Consider implementing a more robust selection mechanism that can adapt to minor changes
+- Implement a remote configuration system to update selectors without extension updates
+
+### API Changes
+- Monitor the Quorini API for any endpoint or parameter changes
+- Set up automated testing to detect API contract changes
+
+### Chrome Updates
+- New Chrome versions may affect extension behavior
+- Test regularly with Chrome beta/dev channels to catch issues early
+
+# Testing and Troubleshooting Guide
+
+## Manual Testing Process
+
+1. **Initial Setup Testing**
+   - Install the extension using Chrome developer mode
+   - Open LinkedIn and verify the floating button appears
+   - Click the button and ensure the registration form displays
+   - Complete the registration with test credentials
+   - Verify the verification code process works
+   - After verification, confirm the plugin shows "Setup Complete"
+
+2. **Authentication Testing**
+   - Verify token storage in Chrome storage (using Developer Tools → Application → Storage → Local Storage)
+   - Test token refresh functionality by manually expiring the token
+   - Verify logout and re-login process works
+
+3. **LinkedIn Interaction Testing**
+   - Navigate to LinkedIn and verify plugin detects it
+   - Ensure participant list is fetched correctly
+   - Test like functionality on a test profile
+   - Verify the plugin correctly identifies already-liked posts
+
+4. **Background Process Testing**
+   - Test daily reminder by changing the alarm period temporarily to 1 minute
+   - Verify notification appears and clicking it navigates to LinkedIn
+
+## Common Issues and Solutions
+
+### Popup Not Loading
+- Check for JavaScript errors in the console
+- Verify all files are correctly included in manifest.json
+- Check paths for scripts and stylesheets
+
+### API Calls Failing
+- Check network tab for failed requests
+- Verify authentication headers are correctly set
+- Ensure URLs match the expected endpoints
+- Test API endpoints directly with Postman or similar tool
+
+### LinkedIn Selectors Not Working
+- Use the console to test selectors directly:
+  ```javascript
+  document.querySelectorAll('button span.artdeco-button__text').forEach(el => console.log(el.textContent));
+  ```
+- LinkedIn may have updated their DOM structure
+- Update selectors in content.js as needed
+
+### Permissions Issues
+- Ensure all required permissions are in manifest.json
+- Check Chrome extension settings to confirm permissions are granted
+- Try reinstalling the extension
+
+## Performance Testing
+
+1. **Memory Usage**
+   - Monitor memory consumption in Chrome Task Manager
+   - Check for memory leaks during extended use
+   - Optimize DOM operations to reduce memory footprint
+
+2. **CPU Usage**
+   - Monitor CPU usage during automation
+   - Reduce intensive operations or add delays if CPU usage is high
+   - Be especially careful with scrolling and DOM manipulation
+
+3. **Network Efficiency**
+   - Minimize API calls
+   - Implement caching where appropriate
+   - Handle network failures gracefully
+
+## LinkedIn-Specific Testing
+
+1. **Detection Testing**
+   - Run the plugin with increased delays to test LinkedIn's detection mechanisms
+   - Monitor for any warning messages from LinkedIn
+   - Check if account gets restricted after extended use
+
+2. **Multiple Profile Testing**
+   - Test with various LinkedIn profile types
+   - Verify compatibility with company pages
+   - Test with profiles having different UIs or languages
+
+## Troubleshooting Workflow
+
+If automation isn't working properly:
+
+1. Check console logs for errors
+2. Verify network requests are succeeding
+3. Test selectors directly in console
+4. Manually step through automation process
+5. Increase logging verbosity for debugging
+6. Test with simplified LinkedIn pages (fewer posts)
+7. Try on different LinkedIn accounts if possible
+
