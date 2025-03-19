@@ -1,13 +1,12 @@
 {
+  "name": "CrossLike.us",
+  "version": "1.0.0",
+  "description": "Automate LinkedIn post interaction",
   "manifest_version": 3,
-  "name": "v.3 CrossLike.us claude3.7",
-  "version": "1.0",
-  "description": "Automate LinkedIn interactions",
   "permissions": [
     "storage",
     "alarms",
     "notifications",
-    "scripting",
     "tabs"
   ],
   "host_permissions": [
@@ -16,26 +15,28 @@
     "https://auth.quorini.io/*"
   ],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js",
+    "type": "module"
   },
   "content_scripts": [
     {
       "matches": ["https://www.linkedin.com/*"],
-      "js": ["utils.js", "api.js", "auth.js", "content.js"],
-      "css": ["content-styles.css"]
+      "js": ["content.js"],
+      "type": "module",
+      "css": ["styles.css"]
     }
   ],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
-      "16": "images/icon.png",
-      "48": "images/icon.png",
-      "128": "images/icon.png"
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
     }
   },
   "icons": {
-    "16": "images/icon.png",
-    "48": "images/icon.png",
-    "128": "images/icon.png"
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
   }
 }

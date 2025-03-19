@@ -1,0 +1,18 @@
+linkedin-chrome-extension
+├── src
+│   ├── api
+│   │   └── index.js
+│   ├── background
+│   │   └── background.js
+│   ├── content
+│   │   ├── content.js
+│   │   └── styles.css
+│   ├── popup
+│   │   ├── popup.html
+│   │   ├── popup.js
+│   │   └── popup.css
+│   └── utils
+│       └── storage.js
+├── manifest.json
+├── package.json
+└── README.md

@@ -1,0 +1,42 @@
+{
+  "name": "linkedin-chrome-extension",
+  "version": "1.0.0",
+  "description": "A Chrome extension that adds a floating button on LinkedIn pages for user signup and interaction.",
+  "main": "src/background/background.js",
+  "scripts": {
+    "build": "echo 'Build process not defined'",
+    "test": "echo 'Test process not defined'"
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "https://www.linkedin.com/*"
+  ],
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "src/background/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.linkedin.com/*"],
+      "js": ["src/content/content.js"],
+      "css": ["src/content/styles.css"]
+    }
+  ],
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0"
+  }
+}

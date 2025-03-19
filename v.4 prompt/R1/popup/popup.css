@@ -1,0 +1,49 @@
+body {
+    width: 300px;
+    padding: 15px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  button {
+    background-color: #0073b1;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  button:hover {
+    background-color: #005582;
+  }
+  
+  a {
+    color: #0073b1;
+    text-decoration: none;
+    font-size: 12px;
+    text-align: center;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  #auth-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
