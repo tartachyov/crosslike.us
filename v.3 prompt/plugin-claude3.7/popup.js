@@ -7,10 +7,13 @@ const settingsSection = document.getElementById('settings-section');
 const statusMessage = document.getElementById('status-message');
 const setupButton = document.getElementById('setup-button');
 const runButton = document.getElementById('run-button');
+const stopButton = document.getElementById('stop-button');
 const settingsButton = document.getElementById('settings-button');
 const backButton = document.getElementById('back-button');
 const logoutButton = document.getElementById('logout-button');
 const dailyReminderCheckbox = document.getElementById('daily-reminder');
+const progressInfo = document.getElementById('progress-info');
+const progressBar = document.getElementById('progress-bar');
 
 // Initialize the popup
 async function initializePopup() {
@@ -20,10 +23,37 @@ async function initializePopup() {
   setupSection.classList.toggle('hidden', isSetupComplete);
   statusSection.classList.toggle('hidden', !isSetupComplete);
   
-  // Update status message
+  // Check if automation is in progress
   if (isSetupComplete) {
+    const automationStatus = await checkAutomationStatus();
+    
+    // Update status message and UI
     if (isAuthenticated) {
-      statusMessage.textContent = 'Plugin is active and ready to run';
+      if (automationStatus.automationInProgress) {
+        statusMessage.textContent = 'Automation in progress...';
+        runButton.classList.add('hidden');
+        
+        // Create and show stop button if it doesn't exist
+        if (!stopButton) {
+          const newStopButton = document.createElement('button');
+          newStopButton.id = 'stop-button';
+          newStopButton.className = 'warning-button';
+          newStopButton.textContent = 'Stop Automation';
+          newStopButton.addEventListener('click', stopAutomation);
+          runButton.parentNode.insertBefore(newStopButton, runButton.nextSibling);
+        } else {
+          stopButton.classList.remove('hidden');
+        }
+        
+        // Show progress bar
+        updateProgressBar(automationStatus);
+      } else {
+        statusMessage.textContent = 'Plugin is active and ready to run';
+        runButton.classList.remove('hidden');
+        if (stopButton) stopButton.classList.add('hidden');
+        progressInfo.classList.add('hidden');
+        progressBar.classList.add('hidden');
+      }
     } else {
       statusMessage.textContent = 'Authentication expired. Please log in again.';
     }
@@ -40,9 +70,52 @@ function checkAuthenticationStatus() {
     chrome.runtime.sendMessage(
       { action: 'checkAuthentication' },
       (response) => {
-        resolve(response);
+        resolve(response || {isAuthenticated: false, isSetupComplete: false});
       }
     );
+  });
+}
+
+// Check automation status
+function checkAutomationStatus() {
+  return new Promise((resolve) => {
+    chrome.runtime.sendMessage(
+      { action: 'checkAutomationStatus' },
+      (response) => {
+        resolve(response || {automationInProgress: false, currentParticipantIndex: 0, totalParticipants: 0});
+      }
+    );
+  });
+}
+
+// Update progress bar
+function updateProgressBar(status) {
+  if (!progressInfo || !progressBar) return;
+  
+  progressInfo.classList.remove('hidden');
+  progressBar.classList.remove('hidden');
+  
+  const { currentParticipantIndex, totalParticipants } = status;
+  const percentage = Math.floor((currentParticipantIndex / totalParticipants) * 100) || 0;
+  
+  progressInfo.textContent = `Progress: ${currentParticipantIndex + 1} of ${totalParticipants}`;
+  progressBar.querySelector('.progress-fill').style.width = `${percentage}%`;
+}
+
+// Stop automation
+function stopAutomation() {
+  chrome.tabs.query({ url: 'https://www.linkedin.com/*' }, (tabs) => {
+    if (tabs.length > 0) {
+      // Send message to content script to stop automation
+      chrome.tabs.sendMessage(tabs[0].id, { action: 'stopAutomation' });
+    }
+    
+    // Update UI
+    statusMessage.textContent = 'Automation stopped';
+    runButton.classList.remove('hidden');
+    if (stopButton) stopButton.classList.add('hidden');
+    progressInfo.classList.add('hidden');
+    progressBar.classList.add('hidden');
   });
 }
 
@@ -77,6 +150,22 @@ runButton.addEventListener('click', () => {
       });
     }
     
+    // Update UI immediately
+    statusMessage.textContent = 'Starting automation...';
+    runButton.classList.add('hidden');
+    
+    // Create stop button if it doesn't exist
+    if (!document.getElementById('stop-button')) {
+      const newStopButton = document.createElement('button');
+      newStopButton.id = 'stop-button';
+      newStopButton.className = 'warning-button';
+      newStopButton.textContent = 'Stop Automation';
+      newStopButton.addEventListener('click', stopAutomation);
+      runButton.parentNode.insertBefore(newStopButton, runButton.nextSibling);
+    } else {
+      document.getElementById('stop-button').classList.remove('hidden');
+    }
+    
     // Close the popup
     window.close();
   });
@@ -103,3 +192,27 @@ dailyReminderCheckbox.addEventListener('change', (event) => {
 
 // Initialize the popup when the DOM is loaded
 document.addEventListener('DOMContentLoaded', initializePopup);
+
+// Create missing UI elements for progress display
+document.addEventListener('DOMContentLoaded', () => {
+  const statusSection = document.getElementById('status-section');
+  
+  if (!document.getElementById('progress-info')) {
+    const progressInfo = document.createElement('p');
+    progressInfo.id = 'progress-info';
+    progressInfo.classList.add('hidden');
+    statusSection.insertBefore(progressInfo, document.getElementById('run-button').parentNode);
+  }
+  
+  if (!document.getElementById('progress-bar')) {
+    const progressBarContainer = document.createElement('div');
+    progressBarContainer.id = 'progress-bar';
+    progressBarContainer.classList.add('progress-bar', 'hidden');
+    
+    const progressFill = document.createElement('div');
+    progressFill.classList.add('progress-fill');
+    progressBarContainer.appendChild(progressFill);
+    
+    statusSection.insertBefore(progressBarContainer, document.getElementById('run-button').parentNode);
+  }
+});

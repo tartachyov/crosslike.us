@@ -28,6 +28,19 @@
           <div class="status-indicator active"></div>
         </div>
         
+        <!-- Progress display -->
+        <p id="progress-info" class="hidden">Progress: <span id="progress">0</span>%</p>
+        <div class="progress-bar hidden">
+          <div id="progress-bar" class="progress"></div>
+        </div>
+
+        <!-- Last run info -->
+        <p id="last-run-info" class="hidden">Last run: <span id="last-run">Never</span></p>
+
+        <!-- Next run info -->
+        <p id="next-run-info" class="hidden">Next run: <span id="next-run">Never</span></p>
+
+        <!-- Actions -->
         <div class="actions">
           <button id="run-button" class="primary-button">Run Now</button>
           <button id="settings-button" class="secondary-button">Settings</button>
