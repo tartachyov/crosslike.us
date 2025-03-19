@@ -10,6 +10,8 @@ function createFloatingButton() {
   
   // Add click event listener
   button.addEventListener('click', togglePluginUI);
+
+  togglePluginUI();
   
   return button;
 }
@@ -392,8 +394,9 @@ async function likeFirstFivePosts() {
       const spanElement = button.querySelector('span.artdeco-button__text');
       return spanElement && 
              spanElement.textContent.trim() === 'Like' && 
-             !spanElement.classList.contains('react-button__text--like');
+             !spanElement.children[0]?.children[1]?.classList.contains('react-button__text--like');
     });
+    // console.log(likeButtons);
   
   // Get the first 5 buttons
   const buttonsToClick = likeButtons.slice(0, 5);

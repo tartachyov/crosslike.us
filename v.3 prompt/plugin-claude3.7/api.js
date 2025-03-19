@@ -22,7 +22,7 @@ async function makeApiCall(url, payload, requiresAuth = true) {
       await refreshTokenIfNeeded();
       const { accessToken } = await loadFromStorage(['accessToken']);
       if (accessToken) {
-        headers['Authorization'] = `Bearer ${accessToken}`;
+        headers['Authorization'] = `${accessToken}`;
       }
     }
     
@@ -258,8 +258,9 @@ async function updateParticipantLastExecuted(participantId) {
   const currentDate = getCurrentDateFormatted();
   
   const payload = {
-    query: "mutation update($input: updateParticipantForUserSelfInput!) { updateParticipantForUserSelf(input: $input) { id } }",
+    query: "mutation update($input: updateParticipantInput!) { updateParticipant(input: $input) { id } }",
     variables: {
+      id: participantId,
       input: {
         lastExecuted: currentDate,
         id: participantId
